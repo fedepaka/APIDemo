@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mysql = require('mysql');
+var http = require('http');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,8 +21,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//use mysql connection
+//Database connection
+app.use(function(req, res, next){
+    global.connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        database : 'test'
+    });
+    connection.connect();
+    next();
+});
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/users', usersRouter);
 app.use('/api/v1/users', usersRouter);
 
 // catch 404 and forward to error handler
@@ -40,17 +53,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//use mysql connection
-//Database connection
-app.use(function(req, res, next){
-    res.locals.connection = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        //password : ' ',
-        database : 'test'
-    });
-    res.locals.connect();
-    next();
-});
-
 module.exports = app;
+var server = http.createServer(app);
+server.listen(4003);
