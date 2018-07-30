@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/* GET tasks listing. */
 router.get('/', function(req, res, next) {
-  //res.send('respond with a resource PAKA');
-    connection.query('SELECT * from user', function (error, results, fields) {
+    //res.send('respond with a resource PAKA');
+    connection.query('SELECT * from tasks', function (error, results) {
         if(error){
             res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
             //If there is error, we send the error in the error section with 500 status
