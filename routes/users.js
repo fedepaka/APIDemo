@@ -13,18 +13,35 @@ router.get('/', function(req, res, next) {
             //If there is no error, all is good and response is 200OK.
         }
     });
-
-    // res.send(JSON.stringify({"status": 200, "error": null, "response": [
-    //     {userId: 3, name: 'silvana', lastname: 'ridruejo'},
-    //     {userId: 4, name: 'malena', lastname: 'ramirez'},
-    //     {userId: 5, name: 'pedro', lastname: 'ramirez'},
-    //     {userId: 6, name: 'simón', lastname: 'ramirez'}
-    //     ]}));
 });
 
-router.post('/', function (req, res) {
-    console.log(req.body);
-    res.send('Hello i´m a post method');
+router.post('/', function (request, result) {
+    //parse an verify rigth data from client. If no ok, thow an error
+    // todo: check array of object from client
+
+    if (request.body.length > 0) {
+
+        const task = { title: request.body[0].title, description: request.body[0].description };
+
+        connection.query('INSERT INTO tasks SET ? ;', task, function (error, results) {
+            if (error) { result.send({ error: error }) };
+
+            if (results) {
+                // {
+                //     "fieldCount": 0,
+                //     "affectedRows": 1,
+                //     "insertId": 3,
+                //     "serverStatus": 2,
+                //     "warningCount": 0,
+                //     "message": "",
+                //     "protocol41": true,
+                //     "changedRows": 0
+                // }
+                result.send({idTask: results.insertId})
+            }
+        });
+    }
+
 });
 
 router.put('/:id', function (req, res) {
@@ -34,10 +51,27 @@ router.put('/:id', function (req, res) {
     res.send('Hello i´m a put method');
 });
 
-router.delete('/:id', function (req, res) {
-    const id = req.params.id;
-    console.log('soy el id: ' + id);
-    res.send('Hello i´m a delete method');
+// router.delete('/:id', function (req, res) {
+//     const id = req.params.id;
+//     console.log('soy el id: ' + id);
+//     res.send('Hello i´m a delete method');
+// });
+
+router.delete('/:id', function (request, response) {
+
+    if (request) {
+        const id = request.params.id;
+
+        connection.query('DELETE from tasks WHERE idTask = ?', id, function (error, results) {
+            if (error) { response.send({ error: error }) };
+
+            if (results) {
+                response.send({rowsAffected: results.rowsAffected})
+            }
+        });
+    } else {
+        response.send(JSON.stringify({"status": 200, "error": null, "response": null, message: "No data to delete"}));
+    }
 });
 
 module.exports = router;
