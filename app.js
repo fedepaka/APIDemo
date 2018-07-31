@@ -15,6 +15,15 @@ var tasksRouter = require('./routes/tasks');
 
 var app = express();
 
+// CORS HEADER configuration
+// https://stackoverflow.com/questions/23751914/how-can-i-set-response-header-on-express-js-assets
+app.use(function (req, res, next) {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept, x-auth");
+    next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
