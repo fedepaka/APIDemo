@@ -83,16 +83,16 @@ const Op = Sequelize.Op;
 // });
 
 router.get('/', function(request, response) {
-    dataModel.Task.findAll().then(function (usuarios) {
-        response.send(usuarios);
+    dataModel.Task.findAll().then(function (tasks) {
+        response.send(tasks);
     })
 });
 
 router.post('/', function(request, response) {
     if (request && request.body) {
         const task = {
-            title: request.body[0].title,
-            description: request.body[0].description,
+            title: request.body.title,
+            description: request.body.description,
             createdAt: new Date()
         };
 
@@ -111,8 +111,8 @@ router.put('/:id', function (request, response) {
         const id = request.params.id;
         //const task = { title: request.body[0].title, description: request.body[0].description };
         const task = {
-            title: request.body[0].title,
-            description: request.body[0].description,
+            title: request.body.title,
+            description: request.body.description,
             updatedAt: new Date()
         };
 

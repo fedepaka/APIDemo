@@ -13,9 +13,9 @@ router.get('/', function(request, response) {
 router.post('/', function(request, response) {
     if (request && request.body) {
         const usuario = {
-            nombre: request.body[0].nombre,
-            apellido: request.body[0].apellido,
-            fechaNacimiento: request.body[0].fechaNacimiento,
+            nombre: request.body.nombre,
+            apellido: request.body.apellido,
+            fechaNacimiento: request.body.fechaNacimiento,
             createdAt: new Date()
         };
 
@@ -33,9 +33,9 @@ router.put('/:id', function (request, response) {
     if (request && request.body) {
         const id = request.params.id;
         const usuario = {
-            nombre: request.body[0].nombre,
-            apellido: request.body[0].apellido,
-            fechaNacimiento: request.body[0].fechaNacimiento,
+            nombre: request.body.nombre,
+            apellido: request.body.apellido,
+            fechaNacimiento: request.body.fechaNacimiento,
             createdAt: new Date()
         };
 
