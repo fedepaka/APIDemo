@@ -1,0 +1,13 @@
+1- Para crear migraciones es necesario instalar
+npm install -g sequelize-cli (referencias: http://docs.sequelizejs.com/manual/tutorial/migrations.html#installing-cli)
+
+2- Para crear nuevo script para población de datos ejecutamos:
+    Ejemplo:
+    $ sequelize seed:generate --name usuarios (obteniendo como resultado el archivo -> seeders\20180802152525-usuarios.js)
+   En el se definen: up / down donde debe ingresar los objetos que serán creados en la tabla para la entidad correspondiente.
+
+3- Para ejecutar el seeder:
+   $ sequelize db:seed:all
+
+4- Para hacer rollback de lo ejecutado por el seeder:
+    $  sequelize db:seed:undo:all
