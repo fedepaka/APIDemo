@@ -3,14 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mysql = require('mysql');
 var http = require('http');
 var bodyParser = require('body-parser');
 
-
-
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usuariosRouter = require('./routes/usuarios');
 var tasksRouter = require('./routes/tasks');
 
 var app = express();
@@ -37,21 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // mdiddleware
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//use mysql connection
-//Database connection
-app.use(function(req, res, next){
-    global.connection = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        database : 'test'
-    });
-    connection.connect();
-    next();
-});
-
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-// app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/usuarios', usuariosRouter);
 app.use('/api/v1/tasks', tasksRouter);
 
 // catch 404 and forward to error handler
@@ -70,6 +54,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// var server = http.createServer(app);
+// server.listen(4003);
 module.exports = app;
-var server = http.createServer(app);
-server.listen(4003);
