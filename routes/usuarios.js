@@ -5,9 +5,37 @@ var Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 router.get('/', function(request, response) {
-    dataModel.Usuario.findAll().then(function (usuarios) {
-        response.send(usuarios);
-    })
+    const id = request.params.id;
+    if(!id)
+    {
+        dataModel.Usuario.findAll().then(function (usuarios) {
+            response.send(usuarios);
+        });
+    } else {
+        dataModel.Usuario.findOne({ where:
+                { idUsuario:
+                        { [Op.eq]: id  }
+                }
+        }).then(function(usuario) {
+            response.send(usuario);
+        });
+    }
+});
+
+router.get('/:id', function(request, response, next) {
+    const id = request.params.id;
+    if(!id || !Number(id))
+    {
+        next(error);
+    } else {
+        dataModel.Usuario.findOne({ where:
+                { idUsuario:
+                        { [Op.eq]: id  }
+                }
+        }).then(function(usuario) {
+            response.send(usuario);
+        });
+    }
 });
 
 router.post('/', function(request, response) {
