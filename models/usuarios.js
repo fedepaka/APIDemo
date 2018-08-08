@@ -28,7 +28,15 @@ db.Usuario = connection.sequelize.define('Usuario', {
         type: Sequelize.DataTypes.BOOLEAN,
         defaultValue: false
     }
-});
+}, {
+    tableName: 'usuarios',
+    underscored: false,
+    classMethods: {
+        associate : function(models) {
+            db.Usuario.hasOne(models.Role)
+        }
+    }});
+
 
 // obtener todos los usuarios
 db.Usuario.ObtenerUsuarios = function(callback) {

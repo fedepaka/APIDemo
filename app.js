@@ -2,13 +2,12 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var http = require('http');
 var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usuariosRouter = require('./routes/usuarios');
 var tasksRouter = require('./routes/tasks');
+var rolesRouter = require('./routes/roles');
 
 var app = express();
 
@@ -25,7 +24,7 @@ app.use(function (req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -37,11 +36,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/api/v1/usuarios', usuariosRouter);
 app.use('/api/v1/tasks', tasksRouter);
+app.use('/api/v1/roles', rolesRouter);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   next(createError(404));
 // });
+
 
 // error handler
 // app.use(function(err, req, res, next) {
@@ -62,7 +63,7 @@ app.use((err, req, res, next) => {
     }
     console.log(err);
     return res.status(err.output.statusCode || 500).json(err.output.payload);
-})
+});
 
 // var server = http.createServer(app);
 // server.listen(4003);

@@ -1,0 +1,4 @@
+1- para crear un archivo de migración sin necesidad de hacer referencia a crear un modelo de dato.
+Puede ser util para actualizar estructura de tablas:
+
+ejecutar: sequelize migration:create --name [migration-name]

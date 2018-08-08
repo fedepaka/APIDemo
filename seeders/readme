@@ -9,5 +9,11 @@ npm install -g sequelize-cli (referencias: http://docs.sequelizejs.com/manual/tu
 3- Para ejecutar el seeder:
    $ sequelize db:seed:all
 
-4- Para hacer rollback de lo ejecutado por el seeder:
+4- Para ejecutar solo un seeder:
+    $ sequelize db:seed --seed [seed file name]
+
+5- Para hacer rollback de lo ejecutado por el seeder:
     $  sequelize db:seed:undo:all
+
+6- Para hacer rollback de lo ejecutado por el seeder:
+    $  sequelize db:seed:undo --seed 20180802183212-usuarios

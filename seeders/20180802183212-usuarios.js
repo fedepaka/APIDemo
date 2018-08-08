@@ -17,22 +17,30 @@ module.exports = {
             isBetaMember: false
           }], {});
         */
+        // const roles = queryInterface.sequelize.query(
+        //       `SELECT idRole from roles where name = 'SuperAdmin';`
+        //     );
+
+        // const rol = roles[0];
 
         return queryInterface.bulkInsert('Usuarios', [{
             nombre: 'Malena',
             apellido: 'Ramirez',
             fechaNacimiento: '2010-10-29 13:50:00',
-            createdAt: new Date()
+            createdAt: new Date(),
+            idRole: 1
         },{
             nombre: 'Pedro',
             apellido: 'Ramirez',
             fechaNacimiento: '2017-12-28 17:50:00',
-            createdAt: new Date()
+            createdAt: new Date(),
+            idRole: 1
         },{
             nombre: 'Simón',
             apellido: 'Ramirez',
             fechaNacimiento: '2017-12-28 17:50:00',
-            createdAt: new Date()
+            createdAt: new Date(),
+            idRole: 1
         }
         ], {});
     },
