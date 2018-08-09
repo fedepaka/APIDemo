@@ -1,6 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var morgan = require('morgan');
+var fs = require('fs');
+var rfs = require('rotating-file-stream');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -10,6 +13,17 @@ var tasksRouter = require('./routes/tasks');
 var rolesRouter = require('./routes/roles');
 
 var app = express();
+
+var logDirectory = path.join(__dirname, 'log');
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+// create a rotating write stream
+var accessLogStream = rfs('access.log', {
+    interval: '1d', // rotate daily
+    path: logDirectory
+});
+// setup the logger
+app.use(morgan('default', {stream: accessLogStream}));
 
 // CORS HEADER configuration
 // https://stackoverflow.com/questions/23751914/how-can-i-set-response-header-on-express-js-assets
@@ -47,12 +61,12 @@ app.use('/api/v1/roles', rolesRouter);
 // error handler
 // app.use(function(err, req, res, next) {
 //   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+//   // res.locals.message = err.message;
+//   // res.locals.error = req.app.get('env') === 'development' ? err : {};
 //
 //   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
+//   //res.status(err.status || 500);
+//   //res.render('error');
 // });
 
 app.use((err, req, res, next) => {
